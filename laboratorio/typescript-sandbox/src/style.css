@@ -95,3 +95,17 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.element-class{
+  text-align: left;
+}
+
+ span{
+    padding-right: 10px;
+  }
+
+  span:nth-child(1){
+    font-weight: 600;
+    font-size: 18px;
+    background-color: green;
+  }
