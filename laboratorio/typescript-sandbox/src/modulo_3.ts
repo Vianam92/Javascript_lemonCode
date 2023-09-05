@@ -43,10 +43,8 @@ export const group5: GrupoMusical = {
 };
 
 export const createList = (group: any) => {
-  let list;
-  let elementLi;
-  list = document.querySelector(".list");
-  elementLi = document.createElement("li");
+  const list = document.querySelector(".list");
+  const elementLi = document.createElement("li");
   list?.appendChild(elementLi);
   elementLi?.setAttribute("class", "element-class");
   for (let item in group) {
