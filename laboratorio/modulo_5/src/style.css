@@ -80,9 +80,3 @@ button:focus-visible {
   padding-top: 20px;
   column-gap: 5px;
 }
-
-.box{
-  background-color: rgba(231, 133, 35, 0.711);
-  border:1px solid #1a1a1a;
-  color:#1a1a1a;
-}

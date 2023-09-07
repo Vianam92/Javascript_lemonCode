@@ -1,46 +1,45 @@
 import "./style.css";
 
-const elementh1: any = document.querySelector('.numero-turno');
-let counter: number = 1;
-const buttonAtras = document.querySelector('.atras');
-const buttonAdelante = document.querySelector('.adelante');
-const resetButton = document.querySelector('.reset');
-const sendElement = document.querySelector('.send');
-const boxElement = document.querySelector('.box');
+const elementh1 = document.querySelector(".numero-turno") as HTMLHeadingElement;
+let counter: number = 0;
+const buttonAtras = document.querySelector(".atras") as HTMLButtonElement;
+const buttonAdelante = document.querySelector(".adelante") as HTMLButtonElement;
+const resetButton = document.querySelector(".reset") as HTMLButtonElement;
+const sendElement = document.querySelector(".send") as HTMLButtonElement;
+const boxElement = document.querySelector(".box") as HTMLInputElement;
 let valueInput: string;
-elementh1.innerHTML = counter.toString().padStart(2, "0");
+elementh1.innerHTML = counter.toString();
 
 const restCounter = () => {
-   if (!elementh1) return;
-   if(counter > 0) counter = counter - 1
-   elementh1.innerHTML = counter.toString().padStart(2, "0");
-}
+  if (counter > 0) {
+    counter = counter - 1;
+    elementh1.innerHTML = counter.toString().padStart(2, "0");
+  }
+  if(counter === 0) elementh1.innerHTML = counter.toString();
+};
 
 const aumentCounter = () => {
-    if (!elementh1) return;
-    counter = counter + 1
-    elementh1.innerHTML = counter.toString().padStart(2, "0");
-}
+  counter = counter + 1;
+  elementh1.innerHTML = counter.toString().padStart(2, "0");
+};
 
 const resetCounter = () => {
-    if (!elementh1) return;
-    counter = 0;
-    elementh1.innerHTML = counter.toString();
-}
+  counter = 0;
+  elementh1.innerHTML = counter.toString();
+};
 
-const guardarValueBox = (event: any) => {
-    const value =  event?.target.value;
-    valueInput = value
-}
+const guardarValueBox = (event: Event) => {
+  const value = event?.target as HTMLInputElement;
+  valueInput = value.value;
+};
 
 const enviarValueBton = () => {
-    if (!elementh1) return;
-    elementh1.innerHTML = valueInput.padStart(2, "0");
-}
+  elementh1.innerHTML = valueInput.padStart(2, "0");
+  boxElement.value = "";
+};
 
-buttonAdelante?.addEventListener("click", aumentCounter);
-buttonAtras?.addEventListener("click", restCounter);
-resetButton?.addEventListener("click", resetCounter);
-boxElement?.addEventListener("keyup", guardarValueBox);
-sendElement?.addEventListener("click", enviarValueBton);
-
+buttonAdelante.addEventListener("click", aumentCounter);
+buttonAtras.addEventListener("click", restCounter);
+resetButton.addEventListener("click", resetCounter);
+boxElement.addEventListener("keyup", guardarValueBox);
+sendElement.addEventListener("click", enviarValueBton);
