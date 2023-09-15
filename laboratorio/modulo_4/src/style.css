@@ -82,7 +82,7 @@ button:focus-visible {
 }
 
 .box{
-  background-color: rgba(231, 133, 35, 0.711);
+  background-color: white;
   border:1px solid #1a1a1a;
   color:#1a1a1a;
 }

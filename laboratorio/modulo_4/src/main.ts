@@ -1,45 +1,56 @@
 import "./style.css";
 
-const elementh1 = document.querySelector(".numero-turno") as HTMLHeadingElement;
 let counter: number = 0;
-const buttonAtras = document.querySelector(".atras") as HTMLButtonElement;
-const buttonAdelante = document.querySelector(".adelante") as HTMLButtonElement;
-const resetButton = document.querySelector(".reset") as HTMLButtonElement;
-const sendElement = document.querySelector(".send") as HTMLButtonElement;
-const boxElement = document.querySelector(".box") as HTMLInputElement;
-let valueInput: string;
-elementh1.innerHTML = counter.toString();
+
+const paintNumber = () => {
+  const elementh1 = document.querySelector(".numero-turno");
+  if (elementh1 !== null && elementh1 !== undefined) {
+    elementh1.textContent = counter.toString().padStart(2, "0");
+  }
+};
 
 const restCounter = () => {
-  if (counter > 0) {
-    counter = counter - 1;
-    elementh1.innerHTML = counter.toString().padStart(2, "0");
-  }
-  if(counter === 0) elementh1.innerHTML = counter.toString();
+  if (counter > 0) counter = counter - 1;
+  paintNumber();
 };
 
 const aumentCounter = () => {
   counter = counter + 1;
-  elementh1.innerHTML = counter.toString().padStart(2, "0");
+  paintNumber();
 };
 
 const resetCounter = () => {
   counter = 0;
-  elementh1.innerHTML = counter.toString();
+  paintNumber();
 };
 
-const guardarValueBox = (event: Event) => {
-  const value = event?.target as HTMLInputElement;
-  valueInput = value.value;
+const sendValueButton = () => {
+  let boxElement = document.querySelector(".box");
+  if (boxElement !== null && boxElement !== undefined && boxElement instanceof HTMLInputElement) {
+      counter = parseInt(boxElement.value);
+      paintNumber();
+      boxElement.value = "";
+  }
 };
 
-const enviarValueBton = () => {
-  elementh1.innerHTML = valueInput.padStart(2, "0");
-  boxElement.value = "";
+const events = () => {
+  const buttonAtras = document.querySelector(".atras");
+  const resetButton = document.querySelector(".reset");
+  const buttonAdelante = document.querySelector(".adelante");
+  const sendElement = document.querySelector(".send") as HTMLButtonElement;
+  if (buttonAtras !== null && buttonAtras !== undefined) {
+    buttonAtras.addEventListener("click", restCounter);
+  }
+  if (buttonAdelante !== null && buttonAdelante !== undefined) {
+    buttonAdelante.addEventListener("click", aumentCounter);
+  }
+  if (resetButton !== null && resetButton !== undefined) {
+    resetButton.addEventListener("click", resetCounter);
+  }
+  if (sendElement !== null && sendElement !== undefined) {
+    sendElement.addEventListener("click", sendValueButton);
+  }
 };
 
-buttonAdelante.addEventListener("click", aumentCounter);
-buttonAtras.addEventListener("click", restCounter);
-resetButton.addEventListener("click", resetCounter);
-boxElement.addEventListener("keyup", guardarValueBox);
-sendElement.addEventListener("click", enviarValueBton);
+paintNumber();
+events();
