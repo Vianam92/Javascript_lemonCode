@@ -4,7 +4,7 @@ let counter: number = 0;
 
 const paintNumber = () => {
   const elementh1 = document.querySelector(".numero-turno");
-  if (elementh1 !== null && elementh1 !== undefined) {
+  if (elementh1 !== null && elementh1 !== undefined && elementh1 instanceof HTMLHeadingElement) {
     elementh1.textContent = counter.toString().padStart(2, "0");
   }else{
     console.error("No existe el elemento");
