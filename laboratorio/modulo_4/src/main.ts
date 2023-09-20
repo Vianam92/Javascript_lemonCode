@@ -3,11 +3,11 @@ import "./style.css";
 let counter: number = 0;
 
 const paintNumber = () => {
-  const elementh1 = document.querySelector(".numero-turno");
-  if (elementh1 !== null && elementh1 !== undefined && elementh1 instanceof HTMLHeadingElement) {
-    elementh1.textContent = counter.toString().padStart(2, "0");
+  const elementTitle = document.querySelector(".numero-turno");
+  if (elementTitle !== null && elementTitle !== undefined && elementTitle instanceof HTMLHeadingElement) {
+    elementTitle.textContent = counter.toString().padStart(2, "0");
   }else{
-    console.error("No existe el elemento");
+    console.error("No se encuentra el title");
   }
 };
 
@@ -16,7 +16,7 @@ const restCounter = () => {
   paintNumber();
 };
 
-const aumentCounter = () => {
+const addCounter = () => {
   counter++;
   paintNumber();
 };
@@ -33,7 +33,7 @@ const sendValueButton = () => {
       paintNumber();
       boxElement.value = "";
   }else{
-    console.error("No existe el elemento");
+    console.error("No se encuentra el texto");
   }
 };
 
@@ -48,7 +48,7 @@ const events = () => {
     console.error("No se encuentra el elemento button");
   }
   if (buttonAdelante !== null && buttonAdelante !== undefined && buttonAdelante instanceof HTMLButtonElement) {
-    buttonAdelante.addEventListener("click", aumentCounter);
+    buttonAdelante.addEventListener("click", addCounter);
   }else{
     console.error("No se encuentra el elemento button");
   }
