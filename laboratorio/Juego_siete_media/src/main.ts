@@ -3,8 +3,6 @@ import "./style.css";
 let pointsUser: number = 0;
 let aleatoryCart: number;
 const divElement = document.querySelector(".turno-display");
-const imgElement = document.createElement("img");
-const title = document.createElement("h2");
 const buttonSend = document.createElement("button");
 const buttonPlantarse = document.createElement("button");
 const buttoNuevaPartida = document.createElement("button");
@@ -25,11 +23,18 @@ const arrayCops = [
 ];
 
 const showPuntuation = () => {
+  const title = document.createElement("h2");
   title.remove();
   const backCart = `${url}/back.jpg`;
   divElement?.appendChild(title);
-  if (title !== null && title !== undefined) {
+  if (
+    title !== null &&
+    title !== undefined &&
+    title instanceof HTMLHeadingElement
+  ) {
     title.textContent = pointsUser.toString();
+  } else {
+    console.error("No se encuentra el elemento");
   }
   createButtonSend();
   createButtonPlant();
@@ -50,15 +55,22 @@ const createButtonPlant = () => {
 };
 
 const createNuevaPartida = () => {
-  buttoNuevaPartida.setAttribute("class", "again");
+  buttoNuevaPartida.setAttribute("class", "again visible");
   divElement?.appendChild(buttoNuevaPartida);
   buttoNuevaPartida.textContent = "Nueva Partida";
 };
 
 const showCart = (img: string) => {
-  imgElement.remove();
-  divElement?.appendChild(imgElement);
-  imgElement.src = img;
+  const image = document.querySelector(".image");
+  if (
+    image !== null &&
+    image !== undefined &&
+    image instanceof HTMLImageElement
+  ) {
+    image.src = img;
+  } else {
+    console.error("No se encuentra la imagen");
+  }
 };
 
 const showGameOver = (message: string) => {
@@ -91,18 +103,24 @@ const reset = () => {
   showPuntuation();
 };
 
+const showStartGame = () => {
+  buttonSend.disabled = true;
+  buttonPlantarse.disabled = true;
+  buttoNuevaPartida.classList.remove("again");
+}
+
 const addPoints = () => {
   pointsUser = pointsUser + aleatoryCart;
   if (pointsUser > 7.5) {
     showGameOver("Game Over");
-    buttonSend.disabled = true;
-    buttoNuevaPartida.removeAttribute("visibility");
+    showStartGame();
+  } else{
+    showPuntuation();
   }
-  showPuntuation();
+  
 };
 
 const handlerPlantarse = () => {
-  buttonSend.disabled = true;
   if (pointsUser < 4) {
     showGameOver("Has sido muy conservador");
   } else if (pointsUser === 5) {
@@ -112,6 +130,7 @@ const handlerPlantarse = () => {
   } else if (pointsUser === 7.5) {
     showGameOver("¡ Lo has clavado! ¡Enhorabuena!");
   }
+  showStartGame();
 };
 
 const events = () => {
@@ -126,6 +145,8 @@ const events = () => {
     buttonSend instanceof HTMLButtonElement
   ) {
     buttonSend.addEventListener("click", getCart);
+  }else{
+    console.error("No se encuentra el botón de enviar");
   }
   if (
     buttonPlantarse !== null &&
@@ -133,6 +154,8 @@ const events = () => {
     buttonPlantarse instanceof HTMLButtonElement
   ) {
     buttonPlantarse.addEventListener("click", handlerPlantarse);
+  }else{
+    console.error("No se encuentra el botón de plantarse");
   }
   if (
     buttonAgain !== null &&
@@ -140,6 +163,9 @@ const events = () => {
     buttonAgain instanceof HTMLButtonElement
   ) {
     buttonAgain.addEventListener("click", reset);
+  }
+  else{
+    console.error("No se encuentra el botón de empezar");
   }
 };
 

@@ -12,16 +12,24 @@ img{
 
 button{
     width: 150px;
+    border: none;
+    background-color: rgb(188, 227, 227);
+    padding:0.5rem 0.2rem;
+    box-shadow: 2px 3px 4px rgb(220, 212, 212);
 }
 
 .send-button{
-    order: 1;
-}
-
-.plantarse{
     order: 2;
 }
 
+.plantarse{
+    order: 3;
+}
+
+.visible{
+    order: 1;
+}
+
 .again{
-    visibility: hidden;
+    display: none;
 }
