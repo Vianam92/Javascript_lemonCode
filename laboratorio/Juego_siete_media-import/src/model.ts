@@ -5,7 +5,7 @@ interface Partida {
 
 export const partida : Partida = {
   pointsUser: 0,
-  aleatoryCart: 0
+  aleatoryCart: 0,
 }
 
 export const url =
