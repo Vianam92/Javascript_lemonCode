@@ -7,6 +7,7 @@ const buttonSend = document.createElement("button");
 const buttonPlantarse = document.createElement("button");
 const buttoNuevaPartida = document.createElement("button");
 const textGameOver = document.createElement("p");
+const title = document.createElement("h2");
 const url =
   "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas";
 const arrayCops = [
@@ -23,7 +24,6 @@ const arrayCops = [
 ];
 
 const showPuntuation = () => {
-  const title = document.createElement("h2");
   title.remove();
   const backCart = `${url}/back.jpg`;
   divElement?.appendChild(title);
