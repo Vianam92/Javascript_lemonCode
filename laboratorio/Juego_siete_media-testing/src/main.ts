@@ -52,6 +52,7 @@ const addPoints = () => {
 };
 
 const handlerPlantarse = () => {
+  // pasarle puntuación
   messages();
   showStartGame();
 };

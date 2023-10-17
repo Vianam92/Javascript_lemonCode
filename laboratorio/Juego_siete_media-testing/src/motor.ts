@@ -6,14 +6,16 @@ export const aleatory = () => {
   return partida.aleatoryCart;
 };
 
-export const messages = () => {
+export const messages = () : string => {
     if (partida.pointsUser < 4) {
-      showGameOver("Has sido muy conservador");
+     return  "Has sido muy conservador";
     } else if (partida.pointsUser === 5) {
-      showGameOver("Te ha entrado el canguelo eh?");
+     return "Te ha entrado el canguelo eh?";
     } else if (partida.pointsUser === 6 || partida.pointsUser === 7) {
-      showGameOver("Casi casi...");
+      return "Casi casi...";
     } else if (partida.pointsUser === 7.5) {
-      showGameOver("¡ Lo has clavado! ¡Enhorabuena!");
+      return "¡ Lo has clavado! ¡Enhorabuena!";
+    } else{
+      return "";
     }
   }
