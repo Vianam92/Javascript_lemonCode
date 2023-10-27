@@ -1,5 +1,5 @@
 import "./style.css";
-import { partida, url, arrayCops } from "./model";
+import { partida} from "./model";
 import {
   showGameOver,
   textGameOver,
@@ -12,22 +12,13 @@ import {
   createNuevaPartida,
   showStartGame
 } from "./ui";
-import { messages, aleatory } from "./motor";
+import { messages, aleatory, aleatoryPlus } from './motor';
 
-const getCart = () => {
+export const getCart = () => {
   aleatory();
-  if (partida.aleatoryCart > 7) partida.aleatoryCart = partida.aleatoryCart + 2;
-  if (partida.aleatoryCart === 0)
-    partida.aleatoryCart = partida.aleatoryCart + 1;
-  let cart: string = `${url}/copas/${partida.aleatoryCart}_${
-    arrayCops[
-      partida.aleatoryCart <= 7
-        ? partida.aleatoryCart - 1
-        : partida.aleatoryCart - 3
-    ]
-  }.jpg`;
+  showCart(aleatoryPlus(partida.aleatoryCart));
   addPoints();
-  showCart(cart);
+  
 };
 
 const reset = () => {
@@ -41,6 +32,7 @@ const reset = () => {
 };
 
 const addPoints = () => {
+  debugger
   partida.pointsUser = partida.pointsUser + partida.aleatoryCart;
   if (partida.pointsUser > 7.5) {
     showGameOver("Game Over");
@@ -52,8 +44,7 @@ const addPoints = () => {
 };
 
 const handlerPlantarse = () => {
-  // pasarle puntuación
-  messages();
+  showGameOver(messages(partida.pointsUser));
   showStartGame();
 };
 
@@ -63,7 +54,7 @@ const events = () => {
   const buttonPlantarse = document.querySelector(".plantarse");
   const buttonAgain = document.querySelector(".again");
   createNuevaPartida();
-  console.log(buttonAgain);
+
   if (
     buttonSend !== null &&
     buttonSend !== undefined &&
