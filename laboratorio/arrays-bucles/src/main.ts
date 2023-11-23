@@ -54,20 +54,11 @@ console.log(activarProtocoloUrgencia(pacientes));
 const reasignaPacientesAMedicoFamilia = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
-  const pacientesEspecialidadPediatria =
-    obtenPacientesAsignadosAPediatria(pacientes);
-  let reasignarPacientes: Pacientes[] = [];
   for (let i = 0; i < pacientes.length; i++) {
     if (pacientes[i].especialidad !== "Pediatra") {
-      reasignarPacientes.push(pacientes[i]);
+      pacientes[i].especialidad = "Medico de familia";
     }}
-    for (let j = 0; j < pacientesEspecialidadPediatria.length; j++) {
-      reasignarPacientes.push({
-        ...pacientesEspecialidadPediatria[j],
-        especialidad: "Medico de familia",
-      });
-    }
-  return reasignarPacientes;
+  return pacientes;
 };
 
 console.log(reasignaPacientesAMedicoFamilia(pacientes));
