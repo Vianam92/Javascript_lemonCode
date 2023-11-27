@@ -1,32 +1,28 @@
 import { eventClickDivCards } from "./shell";
 import { Card, Tablero, tablero } from "./model";
-import { findImage, iniciaPartida, sePuedeVoltearLaCarta, voltearLaCarta } from "./motor";
+import { iniciaPartida, sePuedeVoltearLaCarta, voltearLaCarta } from "./motor";
 
 export const startGameHandler = () => {
+  //cambio estado de la partida
+  tablero.estadoPartida = "CeroCartasLevantadas";
+
   iniciaPartida(tablero);
 };
 
 export const handlerVoltearCarta = (e: any) => {
-
   const img = e.target.children[0];
 
-  const idElementDiv = e.currentTarget.getAttribute("data-indice-array");
+  const indice = e.target.id;
 
-  const id = parseInt(idElementDiv);
-
-  const card = findImage(tablero, id);
+  const card = tablero.cartas[indice];
 
   if (card) {
-    if (sePuedeVoltearLaCarta(tablero, card.encontrada)) {
-      debugger
-      if(!card.estaVuelta) {
-        voltearLaCarta(tablero, id, img, card);
-      } else {
-        console.log('carta volteada');
-      }
-      
+    if (sePuedeVoltearLaCarta(tablero, card.encontrada) && !card.estaVuelta) {
+      voltearLaCarta(tablero, img, card, indice);
     } else {
-      console.log("No es posible voltear la carta porque tienes que empezar a jugar");
+      console.log(
+        "No es posible voltear la carta porque tienes que empezar a jugar"
+      );
     }
   }
 };
@@ -34,17 +30,21 @@ export const handlerVoltearCarta = (e: any) => {
 const divElementContain: any = document.querySelector(".contain");
 export const imagesCard: Card[] = [];
 
-export const createDivs = (idFoto: number, element: HTMLDivElement, id: number) => {
+export const createDivs = (
+  idFoto: number,
+  element: HTMLDivElement,
+  id: number
+) => {
   if (element && element instanceof HTMLDivElement) {
     element.setAttribute("class", "carts");
     element.setAttribute("data-indice-array", `${idFoto}`);
-    element.setAttribute('id', `${id}`)
+    element.setAttribute("id", `${id}`);
   } else {
     console.error("No se encuentra el elemento");
   }
 };
 
-export const createImages = (idFoto: number, element: HTMLImageElement) => {
+export const asignIdFotoImage = (idFoto: number, element: HTMLImageElement) => {
   if (element && element instanceof HTMLImageElement) {
     element.setAttribute("class", "image card-images");
     element.setAttribute("data-indice-imagen", `${idFoto}`);
@@ -62,7 +62,7 @@ export const createDivContainers = (card: Card[]) => {
 
     createDivs(card[i].idFoto, createDivElement, i);
 
-    createImages(card[i].idFoto, createImg);
+    asignIdFotoImage(card[i].idFoto, createImg);
 
     createDivElement.appendChild(createImg);
 
@@ -88,23 +88,17 @@ export const asignImage = (imgElement: HTMLImageElement, card: Card) => {
   imgElement.classList.add("visible");
 };
 
-export const removeSrc = (tablero: Tablero) => {
+export const rotateImage = (tablero: Tablero) => {
   if (tablero.indiceCartaVolteadaA && tablero.indiceCartaVolteadaB) {
     const elementImg = document.querySelectorAll(".card-images");
 
-    elementImg.forEach((element) => {
-      const atribute = element.getAttribute("data-indice-imagen");
-
-      if (atribute) {
-        if (element && parseInt(atribute) === tablero.indiceCartaVolteadaA) {
-          removeImage(element);
-        }
-        if (element && parseInt(atribute) === tablero.indiceCartaVolteadaB) {
-          removeImage(element);
-        }
+    elementImg.forEach((element, i) => {
+      if (i == tablero.indiceCartaVolteadaA) {
+        removeImage(element);
+      }
+      if (i == tablero.indiceCartaVolteadaB) {
+        removeImage(element);
       }
     });
   }
 };
-
-
