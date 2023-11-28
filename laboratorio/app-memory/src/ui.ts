@@ -27,7 +27,6 @@ export const handlerVoltearCarta = (e: any) => {
   }
 };
 
-const divElementContain: any = document.querySelector(".contain");
 export const imagesCard: Card[] = [];
 
 export const createDivs = (
@@ -54,7 +53,8 @@ export const asignIdFotoImage = (idFoto: number, element: HTMLImageElement) => {
 };
 
 export const createDivContainers = (card: Card[]) => {
-  divElementContain.textContent = "";
+  const divElementContain = document.querySelector(".contain");
+  if (divElementContain) divElementContain.textContent = "";
   for (let i = 0; i < card.length; i++) {
     const createDivElement = document.createElement("div");
 

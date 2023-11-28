@@ -30,5 +30,3 @@ export const events = () => {
   createDivContainers(tablero.cartas);
   clickButtonStartGame();
 };
-
-addEventListener("DOMContentLoaded", events);

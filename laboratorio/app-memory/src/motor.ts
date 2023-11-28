@@ -12,11 +12,6 @@ export function shuffleArray(card: Card[]): Card[] {
   return card;
 }
 
-export const findImage = (tablero: Tablero, indice: number) =>
-  tablero.cartas.find(
-    (card: Card) => card.idFoto === indice && card.estaVuelta
-  );
-
 export const sePuedeVoltearLaCarta = (
   tablero: Tablero,
   encontrada: Boolean
