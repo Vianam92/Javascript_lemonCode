@@ -10,12 +10,16 @@ import {
   voltearLaCarta,
 } from "./motor";
 
+//constantes
 const divElementContain = document.querySelector(".contain");
 export const buttonStart = document.querySelector(".btn-start");
 export const buttonReiniciar = document.querySelector(".btn-reiniciar");
+let count = 0;
 
+//empezar partida
 export const startGameHandler = () => {
   createMsgs("partida iniciada");
+
   iniciaPartida(tablero);
 };
 
@@ -105,6 +109,12 @@ export const createMsgs = (msg: string) => {
   }
 };
 
+const reiniciarValoresTablero = () =>
+  tablero.cartas.map((card) => {
+    card.encontrada = false;
+    card.estaVuelta = false;
+  });
+
 export const reiniciarJuego = (): void => {
   if (
     buttonStart &&
@@ -114,13 +124,45 @@ export const reiniciarJuego = (): void => {
   ) {
     buttonStart.classList.remove("invisible");
     buttonReiniciar.classList.add("invisible");
+
     tablero.estadoPartida = "PartidaNoIniciada";
+
     createDivContainers(tablero.cartas);
+
+    reiniciarValoresTablero();
+
+    //reiniciar los puntos del jugador;
+    count = 0;
   }
 };
 
+const voltearPrimeraCarta = (indice: number) => {
+  tablero.indiceCartaVolteadaA = indice;
+  tablero.estadoPartida = "UnaCartaLevantada";
+};
+
+const voltearSegundaCarta = (indice: number) => {
+  tablero.indiceCartaVolteadaB = indice;
+  tablero.estadoPartida = "DosCartasLevantadas";
+};
+
+const partidaCompletada = () => {
+  tablero.estadoPartida = "PartidaCompleta";
+  createMsgs("¡Partida Completa!");
+  if (
+    buttonStart &&
+    buttonStart instanceof HTMLButtonElement &&
+    buttonReiniciar &&
+    buttonReiniciar instanceof HTMLButtonElement
+  ) {
+    buttonStart.classList.add("invisible");
+    buttonReiniciar.classList.remove("invisible");
+  }
+  tablero.indiceCartaVolteadaA = undefined;
+  tablero.indiceCartaVolteadaB = undefined;
+};
+
 export const handlerVoltearCarta = (e: any) => {
-  console.log(tablero.estadoPartida)
   const indice = e.target.id;
   if (
     sePuedeVoltearLaCarta(tablero, indice) &&
@@ -129,38 +171,28 @@ export const handlerVoltearCarta = (e: any) => {
   ) {
     const card = tablero.cartas[indice];
     const img = e.target.children[0];
+
+    //voltear la carta
     voltearLaCarta(tablero, indice);
 
     //actualizar la carta
     asignImage(img, card);
 
     if (tablero.estadoPartida === "CeroCartasLevantadas") {
-      tablero.indiceCartaVolteadaA = indice;
-      tablero.estadoPartida = "UnaCartaLevantada";
+      voltearPrimeraCarta(indice);
     } else if (tablero.estadoPartida === "UnaCartaLevantada") {
-      tablero.indiceCartaVolteadaB = indice;
-      tablero.estadoPartida = "DosCartasLevantadas";
+      voltearSegundaCarta(indice);
       if (sonPareja(tablero)) {
         parejaEncontrada(tablero);
+        count++;
         if (esPartidaCompleta(tablero)) {
-          tablero.estadoPartida = "PartidaCompleta";
-          createMsgs("¡Partida Completa!");
-          if (
-            buttonStart &&
-            buttonStart instanceof HTMLButtonElement &&
-            buttonReiniciar &&
-            buttonReiniciar instanceof HTMLButtonElement
-          ) {
-            buttonStart.classList.add("invisible");
-            buttonReiniciar.classList.remove("invisible");
-          }
-          tablero.indiceCartaVolteadaA = undefined;
-          tablero.indiceCartaVolteadaB = undefined;
+          partidaCompletada();
         } else {
           tablero.estadoPartida = "CeroCartasLevantadas";
         }
       } else {
         parejaNoEncontrada(tablero);
+        count++;
         setTimeout(() => {
           rotateImage(tablero);
           tablero.estadoPartida = "CeroCartasLevantadas";
@@ -169,7 +201,18 @@ export const handlerVoltearCarta = (e: any) => {
         }, 1000);
       }
     }
-  } else {
+  } else if (tablero.estadoPartida === "PartidaNoIniciada") {
     createMsgs("inicia la partida");
+  } else {
+    createMsgs("Las cartas se estan girando");
+  }
+  numberOfGames();
+};
+
+export const numberOfGames = () => {
+  const elementSpan = document.querySelector(".numero-intentos");
+  if (elementSpan && elementSpan instanceof HTMLSpanElement) {
+    elementSpan.textContent = "";
+    elementSpan.textContent += count;
   }
 };

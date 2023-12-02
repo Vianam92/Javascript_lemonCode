@@ -109,12 +109,10 @@ export const esPartidaCompleta = (tablero: Tablero): boolean => {
 // Iniciar partida
 
 export const iniciaPartida = (tablero: Tablero): void => {
-  console.log(tablero)
   //barajo las cartas
   tablero.cartas = shuffleArray(tablero.cartas);
 
   tablero.estadoPartida = "CeroCartasLevantadas";
-
   //repinto los div con los ids
   createDivContainers(tablero.cartas);
 };

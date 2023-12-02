@@ -4,6 +4,7 @@ import {
   buttonStart,
   createDivContainers,
   handlerVoltearCarta,
+  numberOfGames,
   reiniciarJuego,
   startGameHandler,
 } from "./ui";
@@ -37,4 +38,5 @@ const clickButtonStartGame = () => {
 export const events = () => {
   createDivContainers(tablero.cartas);
   clickButtonStartGame();
+  numberOfGames();
 };
