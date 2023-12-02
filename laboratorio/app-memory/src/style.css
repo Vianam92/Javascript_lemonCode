@@ -103,15 +103,63 @@ gap: 1rem;
 }
 
 .carts{
-background-color: rgb(53, 149, 222);
-height: 150px;
+background-color: rgba(53, 149, 222, 0.151);
+width: 200px;
+height: 200px;
+position: relative;
 border-radius: 25px;
+cursor: pointer;
+border: 1px solid #000; /* Borde de la carta */
+transition: all 0.3s ease 0s;
+padding: 0.2rem;
 }
 
-.image{
+.invisible{
   display: none;
+}
+
+.btn-reiniciar{
+  margin-top: 2rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: rgba(53, 149, 222, 0.362);
+  color: rgba(8, 1, 1, 0.823);
+  font-size: 1.2rem;
 }
 
 .visible{
   display: inline-block;
+}
+
+.card-images{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(3, 8, 106, 0.6);
+  object-fit: cover;
+  border-radius: 25px;
+  transition: transform 0.4s ease 0s;
+  animation: giro 1s 1;
+}
+
+.btn-start{
+  margin-top: 2rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: rgba(53, 149, 222, 0.362);
+  color: rgba(8, 1, 1, 0.823);
+  font-size: 1.2rem;
+}
+
+.text{
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+@keyframes giro {
+  from {
+    transform: rotateY( 180deg);
+  }
+  to {
+    transform: rotateY( 0deg);
+  }
 }

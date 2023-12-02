@@ -1,5 +1,5 @@
 import { Card, Tablero } from "./model";
-import { asignImage, createDivContainers, imagesCard, rotateImage } from "./ui";
+import { createDivContainers, createMsgs } from "./ui";
 
 export function shuffleArray(card: Card[]): Card[] {
   for (let i = card.length - 1; i > 0; i--) {
@@ -14,16 +14,22 @@ export function shuffleArray(card: Card[]): Card[] {
 
 export const sePuedeVoltearLaCarta = (
   tablero: Tablero,
-  encontrada: Boolean
+  indice: number
 ): boolean => {
-  return (
-    !encontrada &&
-    (tablero.estadoPartida === "CeroCartasLevantadas" ||
-      tablero.estadoPartida === "UnaCartaLevantada")
-  );
+  if (indice) {
+    const carta = tablero.cartas[indice];
+
+    return (
+      (!carta.encontrada) ||
+      !carta.estaVuelta
+    );
+  } else {
+    createMsgs("carta ya volteada");
+    return false;
+  }
 };
 
-const actualizarCartaVuelta = (
+export const actualizarCartaVuelta = (
   tablero: Tablero,
   indice: number,
   estado: boolean
@@ -37,7 +43,7 @@ const actualizarCartaVuelta = (
   }));
 };
 
-const actualizarCartaEncontrada = (tablero: Tablero, indice: number) => {
+export const actualizarCartaEncontrada = (tablero: Tablero, indice: number) => {
   return (tablero.cartas = tablero.cartas.map((carta, i) => {
     if (i == indice) {
       return { ...carta, encontrada: true };
@@ -47,99 +53,49 @@ const actualizarCartaEncontrada = (tablero: Tablero, indice: number) => {
   }));
 };
 
-export const voltearLaCarta = (
-  tablero: Tablero,
-  img: HTMLImageElement,
-  card: Card,
-  indice: number
-): void => {
-  imagesCard.push(card);
-
-  if (card) {
-    //asigno la imagen
-    asignImage(img, card);
-
-    if (imagesCard.length === 1) {
-      tablero.estadoPartida = "UnaCartaLevantada";
-      tablero.indiceCartaVolteadaA = indice;
-      actualizarCartaVuelta(tablero, indice, true);
-    }
-    if (imagesCard.length === 2) {
-      tablero.estadoPartida = "DosCartasLevantadas";
-      tablero.indiceCartaVolteadaB = indice;
-      actualizarCartaVuelta(tablero, indice, true);
-
-      if (sonPareja(tablero)) {
-        parejaEncontrada(tablero);
-      } else {
-        parejaNoEncontrada(tablero);
-      }
-      imagesCard.length = 0;
-      tablero.estadoPartida = "CeroCartasLevantadas";
-    }
-  }
+export const voltearLaCarta = (tablero: Tablero, indice: number): void => {
+  actualizarCartaVuelta(tablero, indice, true);
 };
 
 // Dos cartas son pareja si en el array de tablero de cada una tienen el mismo id
 export const sonPareja = (tablero: Tablero): boolean => {
-  const indiceCardA = tablero.indiceCartaVolteadaA;
-  const indiceCardB = tablero.indiceCartaVolteadaB;
+  const indiceA = tablero.indiceCartaVolteadaA;
+  const indiceB = tablero.indiceCartaVolteadaB;
 
-  if (indiceCardA && indiceCardB) {
-    const cartaA = tablero.cartas[indiceCardA];
-    const cartaB = tablero.cartas[indiceCardB];
+  if (indiceA && indiceB) {
+    const cartaA = tablero.cartas[indiceA];
+    const cartaB = tablero.cartas[indiceB];
 
-    if (cartaA && cartaB && cartaA.idFoto === cartaB.idFoto) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
+    return cartaA.idFoto === cartaB.idFoto;
   }
+
+  return false;
 };
 
 /*
   Aquí asumimos ya que son pareja, lo que hacemos es marcarlas como encontradas y comprobar si la partida esta completa.
 */
-const parejaEncontrada = (tablero: Tablero): void => {
-  const indiceCardA = tablero.indiceCartaVolteadaA;
-  const indiceCardB = tablero.indiceCartaVolteadaB;
+export const parejaEncontrada = (tablero: Tablero): void => {
+  const indiceA = tablero.indiceCartaVolteadaA;
+  const indiceB = tablero.indiceCartaVolteadaB;
 
-  if (indiceCardA && indiceCardB) {
-    actualizarCartaEncontrada(tablero, indiceCardA);
-    actualizarCartaEncontrada(tablero, indiceCardB);
-
-    tablero.indiceCartaVolteadaA = undefined;
-    tablero.indiceCartaVolteadaB = undefined;
-
-    if (esPartidaCompleta(tablero)) {
-      tablero.estadoPartida = "PartidaCompleta";
-      console.log("¡Partida completa!");
-    }
+  if (indiceA && indiceB) {
+    actualizarCartaEncontrada(tablero, indiceA);
+    actualizarCartaEncontrada(tablero, indiceB);
   }
 };
 
 /*
   Aquí asumimos que no son pareja y las volvemos a poner boca abajo
 */
-const parejaNoEncontrada = (tablero: Tablero): void => {
-  const indiceCardA = tablero.indiceCartaVolteadaA;
-  const indiceCardB = tablero.indiceCartaVolteadaB;
+export const parejaNoEncontrada = (tablero: Tablero): void => {
+  const indiceA = tablero.indiceCartaVolteadaA;
+  const indiceB = tablero.indiceCartaVolteadaB;
 
-  if (indiceCardA && indiceCardB) {
-    actualizarCartaVuelta(tablero, indiceCardA, false);
-    actualizarCartaVuelta(tablero, indiceCardB, false);
-    virarCarta(tablero);
+  if (indiceA && indiceB) {
+    actualizarCartaVuelta(tablero, indiceA, false);
+    actualizarCartaVuelta(tablero, indiceB, false);
   }
-};
-
-const virarCarta = (tablero: Tablero) => {
-  setTimeout(() => {
-    rotateImage(tablero);
-    tablero.indiceCartaVolteadaA = undefined;
-    tablero.indiceCartaVolteadaB = undefined;
-  }, 1000);
 };
 
 /*
@@ -153,8 +109,11 @@ export const esPartidaCompleta = (tablero: Tablero): boolean => {
 // Iniciar partida
 
 export const iniciaPartida = (tablero: Tablero): void => {
+  console.log(tablero)
   //barajo las cartas
   tablero.cartas = shuffleArray(tablero.cartas);
+
+  tablero.estadoPartida = "CeroCartasLevantadas";
 
   //repinto los div con los ids
   createDivContainers(tablero.cartas);

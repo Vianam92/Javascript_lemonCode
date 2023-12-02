@@ -1,7 +1,10 @@
 import { tablero } from "./model";
 import {
+  buttonReiniciar,
+  buttonStart,
   createDivContainers,
   handlerVoltearCarta,
+  reiniciarJuego,
   startGameHandler,
 } from "./ui";
 
@@ -18,11 +21,16 @@ export const eventClickDivCards = () => {
 };
 
 const clickButtonStartGame = () => {
-  const buttonStart = document.querySelector(".btn-start");
   if (buttonStart && buttonStart instanceof HTMLButtonElement) {
     buttonStart.addEventListener('click', startGameHandler);
   } else {
     console.error("No se encuentra el botón de enviar");
+  }
+
+  if(buttonReiniciar && buttonReiniciar instanceof HTMLButtonElement){
+    buttonReiniciar.addEventListener('click', reiniciarJuego);
+  }else{
+    console.error("No se encuentra el botón de reiniciar")
   }
 };
 
