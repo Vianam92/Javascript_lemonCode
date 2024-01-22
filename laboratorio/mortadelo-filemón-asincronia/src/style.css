@@ -1,0 +1,61 @@
+body{
+    width: 100%;
+    background-color: azure;
+}
+
+.container{
+text-align: center;
+}
+
+.container-search{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-search input{
+    margin-bottom:1rem;
+    border: none;
+    border-bottom: solid 1px grey;
+    font-size: 1.2rem;;
+    width:300px;
+    height:40px;
+    padding-left: 1.2rem;
+}
+
+.personajes-section{
+  display:flex;
+  flex-wrap: wrap;  
+  gap:1rem;
+  justify-content: center;
+}
+
+.personajes-section ul{
+    width:300px;
+    display:flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding:1rem;
+}
+
+.personajes-section ul img{
+    width:250px;
+    height: 200px;;
+    object-fit: contain;
+}
+
+li{
+    list-style-type: none;
+}
+
+button{
+    width:150px;
+    height: 40px;
+    font-size: 1.1rem;
+    border: none;
+    color:beige;
+    background-color: rgba(0, 0, 0, 0.631);
+    border-radius: 8px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
