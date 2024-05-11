@@ -26,7 +26,7 @@ export const getValue = () => {
 
 export const filterCharacter = () => {
   let characterFind = characters.filter(
-    (character: Characters) => character.nombre.toLowerCase() === getValue()
+    (character: Characters) => character.nombre === getValue()
   );
 
   if (characterFind.length) {

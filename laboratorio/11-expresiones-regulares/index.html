@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
+    <div id="app">
+      <section>
+        <label for="iban"
+        >Introduzca el IBAN <input name="iban" type="text" class="iban"
+      /></label>
+      <p class="format"></p>
+      <p class="isValid"></p>
+      <p class="banco">Banco: <span class="banco-span"></span></p>
+      <p class="codigo">Código de Sucursal: <span class="codigo-span"></span></p>
+      <p class="digito">Dígito de control: <span class="digito-span"></span></p>
+      <p class="cuenta">Número de cuenta: <span class="cuenta-span"></span></p>
+      </section>
+      <section>
+        <label for="iban"
+        >Pegue el HTML <textarea name="" id="" cols="50" rows="10" class="textarea"></textarea></label>
+      <button class="button-event">Extraer imagenes</button>
+      <div class="images">
+      </div>
+      </section>
+      
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
