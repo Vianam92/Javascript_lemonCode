@@ -1,0 +1,40 @@
+.root {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5px;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 5px solid #232c3b;
+  }
+  
+  .header-container h1 {
+    font-size: 2.2rem;
+    font-weight: 300;
+  }
+
+  .header-container{
+    p{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      span{
+        color: var(--primary_color);
+        font-weight: 600;
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .containerIban{
+    display: flex;
+    justify-content: space-between;
+    padding:0.5rem 1.4rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
