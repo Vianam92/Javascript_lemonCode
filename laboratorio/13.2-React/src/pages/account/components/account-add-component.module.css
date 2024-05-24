@@ -1,0 +1,52 @@
+.data-cell {
+  font-size: 16px;
+  padding: 15px;
+  color: #232c3b;
+  align-self: center;
+}
+
+.select {
+  font-size: 13px;
+  border-radius: 10px;
+  padding: 8px 10px;
+  width: 90%;
+  cursor: pointer;
+}
+
+.select > option {
+  font-size: 15px;
+}
+
+.select-container {
+  display: flex;
+  justify-content: center;
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 550px;
+    width: 100%;
+    gap: 1rem;
+    label {
+      display: flex;
+      column-gap: 0.2rem;
+      align-items: center;
+    }
+    div {
+      border-bottom: solid 1px black;
+      padding-bottom: 2rem;
+      label {
+        display: flex;
+        column-gap: 0.2rem;
+        align-items: center;
+        input {
+          margin: 0;
+        }
+      }
+    }
+
+    button {
+      max-width: 200px;
+    }
+  }
+}
